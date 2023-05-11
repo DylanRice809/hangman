@@ -22,7 +22,7 @@ class Hangman
   
   def take_turn (word, guess_array, incorrect_guesses)
     puts "Guess a letter: "
-    guess = gets.chomp!
+    guess = gets.chomp!.downcase!
     if (word.include?(guess))
       find_all_index(guess, word).each { |index| guess_array[index] = guess }
       puts "There are #{find_all_index(guess, word).length} #{guess}s."
