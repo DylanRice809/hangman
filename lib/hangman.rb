@@ -1,6 +1,6 @@
 dictionary = File.open("google-10000-english-no-swears.txt", "r")
 dictionary_contents = dictionary.read
-
+dictionary.rewind
 
 class Hangman
   def initialize (all_words)
@@ -20,21 +20,34 @@ class Hangman
     indices_array  
   end
   
-  def take_turn (word, guess_array, strikes, incorrect_guesses)
+  def take_turn (word, guess_array, incorrect_guesses)
+    puts "Guess a letter: "
     guess = gets.chomp!
     if (word.include?(guess))
       find_all_index(guess, word).each { |index| guess_array[index] = guess }
-      p guess_array
+      puts "There are #{find_all_index(guess, word).length} #{guess}s."
     else
-      strikes -= 1
+      puts "There are no #{guess}s."
+      @strikes = @strikes - 1
       incorrect_guesses << guess
     end
   end
 
   public
   def play_game ()
-    while (@strikes > 0 && @correct_guesses.include?("_")) do
-      take_turn(@word, @correct_guesses, @strikes, @incorrect_guesses)
+    loop do 
+      puts "Strikes remaining: #{@strikes}"
+      puts "Incorrect guesses: #{@incorrect_guesses}"
+      take_turn(@word, @correct_guesses, @incorrect_guesses)
+      p @correct_guesses
+      puts "--------------------"
+      if (!(@correct_guesses.include?("_")))
+        puts "Congratulations! You won!"
+        break
+      elsif (@strikes == 0)
+        puts "You lost. The word was #{@word}."
+        break
+      end
     end
   end
 end
