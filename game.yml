@@ -1,0 +1,13 @@
+--- !ruby/object:Hangman
+word: concepts
+strikes: 8
+correct_guesses:
+- _
+- _
+- _
+- _
+- e
+- _
+- _
+- _
+incorrect_guesses: []
